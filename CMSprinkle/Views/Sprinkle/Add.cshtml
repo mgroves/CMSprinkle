@@ -11,9 +11,17 @@
 }
 
 <form method="post">
-    <p>Key: <input type="text" name="key" value="@Model.Key" maxlength="90" placeholder="Unique Identifier" /></p>
-    <p>Content: <textarea rows="5" name="content" id="content" maxlength="10000000" placeholder="Markdown: Click to edit">@Model.Content</textarea></p>
-    <input type="submit" value="Add" />
+    <div class="form-group">
+        <label for="key">Key:</label>
+        <input type="text" id="key" name="key" value="@Model.Key" maxlength="90" placeholder="Unique Identifier" />
+    </div>
+
+    <div class="form-group">
+        <label for="content">Content:</label>
+        <textarea rows="5" id="content" name="content" maxlength="10000000" placeholder="Markdown: Click to edit">@Model.Content</textarea>
+    </div>
+
+    <input type="submit" value="Add" class="submit-button" />
 </form>
 
 @section scripts {
