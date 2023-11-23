@@ -1,13 +1,13 @@
 ﻿@{ Layout = "_SprinkleLayout";}
 @model CMSprinkle.ViewModels.EditViewModel
 
-<h1>CMSprinkle Add Content</h1>
+<h1>Edit Content</h1>
 
 @Html.ActionLink("⬅ Back", "Home", "Sprinkle")
 
 <form method="post">
     <p>Key: <input type="text" name="key" value="@Model.Key" readonly /></p>
-    <p>Content: <textarea rows="20" width="75%" name="content" id="content">@Model.Content</textarea></p>
+    <p>Content: <textarea rows="20" name="content" id="content">@Model.Content</textarea></p>
     <input type="submit" value="Update" />
 </form>
 

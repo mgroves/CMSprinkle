@@ -2,11 +2,80 @@
 <html lang="en">
 <head>
     <title>CMSprinkle</title>
+    
+    <style>
+        .cms-home-container {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+            .cms-home-container h1 {
+                color: #333;
+                text-align: center;
+            }
+
+            .cms-home-container table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+
+            .cms-home-container th, .cms-home-container td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }
+
+            .cms-home-container th {
+                background-color: #f2f2f2;
+            }
+
+            .cms-home-container input[type="text"],
+            .cms-home-container textarea {
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+
+            .cms-home-container input[type="submit"] {
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+                .cms-home-container input[type="submit"]:hover {
+                    background-color: #45a049;
+                }
+
+            .cms-home-container a {
+                text-decoration: none;
+                color: #2a5db0;
+            }
+
+                .cms-home-container a:hover {
+                    text-decoration: underline;
+                }
+
+            .cms-home-container .no-content {
+                text-align: center;
+                padding: 20px;
+            }
+</style>
+
 </head>
 <body>
 
-@RenderBody()
+<div class="cms-home-container">
+    @RenderBody()
+</div>
 
-@RenderSection("Scripts", required: false)
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
