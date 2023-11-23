@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace CMSprinkle.Couchbase;
+namespace CMSprinkle;
 
 public interface ICMSprinkleAuth
 {

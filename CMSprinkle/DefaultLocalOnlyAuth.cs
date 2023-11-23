@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace CMSprinkle.Couchbase;
+namespace CMSprinkle;
 
 internal class DefaultLocalOnlyAuth : ICMSprinkleAuth
 {

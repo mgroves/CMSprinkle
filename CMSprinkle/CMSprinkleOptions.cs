@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CMSprinkle.Couchbase;
+namespace CMSprinkle;
 
 public class CMSprinkleOptions
 {

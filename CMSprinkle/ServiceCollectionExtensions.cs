@@ -1,6 +1,5 @@
 ﻿using System;
 using CMSprinkle.Data;
-using Couchbase.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using Microsoft.Extensions.FileProviders;
@@ -43,20 +42,5 @@ public static class ServiceCollectionExtensions
         {
             @this.AddTransient<ICMSprinkleAuth, DefaultLocalOnlyAuth>();
         }
-    }
-
-
-    public static void AddCMSprinkleCouchbase(this IServiceCollection @this,
-        string bucketName,
-        string scopeName,
-        string collectionName)
-    {
-        @this.AddCouchbaseBucket<ICmsBucketProvider>(bucketName, b =>
-        {
-            b
-                .AddScope(scopeName)
-                .AddCollection<ICmsCollectionProvider>(collectionName);
-        });
-        @this.AddTransient<ICMSprinkleDataService, CouchbaseCMSprinkleDataSerivce>();
     }
 }

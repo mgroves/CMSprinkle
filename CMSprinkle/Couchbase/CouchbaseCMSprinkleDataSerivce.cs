@@ -2,7 +2,10 @@
 using System.Threading.Tasks;
 using CMSprinkle.Data;
 using CMSprinkle.ViewModels;
+using Couchbase.Core.Exceptions.KeyValue;
 using Couchbase.KeyValue;
+using Couchbase.Transactions;
+using Couchbase.Transactions.Config;
 using Ganss.Xss;
 using Markdig;
 
@@ -11,10 +14,12 @@ namespace CMSprinkle.Couchbase;
 public class CouchbaseCMSprinkleDataSerivce : ICMSprinkleDataService
 {
     private readonly ICmsCollectionProvider _cmsCollectionProvider;
+    private readonly DurabilityLevelWrapper _durabilityLevelWrapper;
 
-    public CouchbaseCMSprinkleDataSerivce(ICmsCollectionProvider cmsCollectionProvider)
+    public CouchbaseCMSprinkleDataSerivce(ICmsCollectionProvider cmsCollectionProvider, DurabilityLevelWrapper durabilityLevelWrapper)
     {
         _cmsCollectionProvider = cmsCollectionProvider;
+        _durabilityLevelWrapper = durabilityLevelWrapper;
     }
 
     public async Task<GetContentResult> Get(string contentKey)
@@ -66,11 +71,28 @@ public class CouchbaseCMSprinkleDataSerivce : ICMSprinkleDataService
     public async Task AddNew(AddContentSubmitModel model)
     {
         var collection = await _cmsCollectionProvider.GetCollectionAsync();
-        var index = collection.Set<string>("ContentIndex");
+        var cluster = collection.Scope.Bucket.Cluster;
 
-        // TODO: ACID
-        await index.AddAsync(model.Key);
-        await collection.InsertAsync("content::" + model.Key, new CMSprinkleContent() { Content = model.Content} );
+        var transaction = Transactions.Create(cluster, 
+            TransactionConfigBuilder.Create().DurabilityLevel(_durabilityLevelWrapper.DurabilityLevel));
+        await transaction.RunAsync(async ctx =>
+        {
+            // add key to index, unless it's already there
+            var indexResult = await ctx.GetAsync(collection, "ContentIndex");
+            var index = indexResult.ContentAs<List<string>>();
+            if (index.Contains(model.Key))
+            {
+                // key already exists!
+                throw new DocumentExistsException($"Content key '{model.Key}' already exists.");
+            }
+            else
+            {
+                index.Add(model.Key);
+            }
+            // update index, add new content doc
+            await ctx.ReplaceAsync(indexResult, index);
+            await ctx.InsertAsync(collection, "content::" + model.Key, new CMSprinkleContent() { Content = model.Content });
+        });
     }
 
     public async Task Update(string contentKey, EditContentSubmitModel model)

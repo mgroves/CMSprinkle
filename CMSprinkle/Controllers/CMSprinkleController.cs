@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using CMSprinkle.Couchbase;
+﻿using System;
+using System.Threading.Tasks;
 using CMSprinkle.Data;
 using CMSprinkle.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +30,7 @@ public class SprinkleController : Controller
     {
         if (!(await _auth.IsAllowed())) return Unauthorized();
 
-        return View();
+        return View(new AddContentSubmitModel());
     }
 
     [Route("/cmsprinkle/add")]
@@ -39,7 +39,17 @@ public class SprinkleController : Controller
     {
         if (!(await _auth.IsAllowed())) return Unauthorized();
 
-        await _dataService.AddNew(model);
+        try
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+            await _dataService.AddNew(model);
+        }
+        catch (Exception ex)
+        {
+            ModelState.AddModelError("",ex.GetAllExceptionMessages());
+            return View(model);
+        }
 
         return RedirectToAction("Home");
     }
@@ -67,13 +77,5 @@ public class SprinkleController : Controller
         await _dataService.Update(contentKey, model);
 
         return RedirectToAction("Home");
-
-        // var content = await _dataService.Get(contentKey);
-        //
-        // var editModel = new EditViewModel();
-        // editModel.Key = contentKey;
-        // editModel.Content = content;
-        //
-        // return View(editModel);
     }
 }

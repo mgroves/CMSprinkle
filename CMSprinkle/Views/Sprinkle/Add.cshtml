@@ -1,11 +1,17 @@
 ﻿@{ Layout = "_SprinkleLayout";}
+@model CMSprinkle.ViewModels.AddContentSubmitModel
 
 <h1>CMSprinkle Add Content</h1>
 
 <p><a href="/cmsprinkle/home">⬅ Back</a></p>
 
+@if (!ViewData.ModelState.IsValid)
+{
+    @Html.ValidationSummary(false)
+}
+
 <form method="post">
-    <p>Key: <input type="text" name="key" /></p>
-    <p>Content: <textarea rows="20" width="75%" name="content"></textarea></p>
+    <p>Key: <input type="text" name="key" value="@Model.Key" maxlength="90" /></p>
+    <p>Content: <textarea rows="20" width="75%" name="content" maxlength="10000000">@Model.Content</textarea></p>
     <input type="submit" value="Add" />
 </form>
