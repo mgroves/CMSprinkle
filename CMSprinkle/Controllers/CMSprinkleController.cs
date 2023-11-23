@@ -17,6 +17,7 @@ public class SprinkleController : Controller
     }
 
     [Route("/cmsprinkle/home")]
+    [CMSprinkleRoute("/home")]
     public async Task<IActionResult> Home()
     {
         if (!(await _auth.IsAllowed())) return Unauthorized();

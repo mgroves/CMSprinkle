@@ -1,4 +1,5 @@
 ﻿@{ Layout = "_SprinkleLayout";}
+@using CMSprinkle
 @model CMSprinkle.ViewModels.CMSprinkleHome
 
 <h1>CMSprinkle Home Page</h1>
@@ -23,7 +24,7 @@
         {
             <tr>
                 <td>@item.Key</td>
-                <td>@item.Value</td>
+                    <td>@item.Value.ToTruncateMarkdown(50)</td>
                 <td><a href="/cmsprinkle/edit/@item.Key">[Edit]</a></td>
             </tr>
         }

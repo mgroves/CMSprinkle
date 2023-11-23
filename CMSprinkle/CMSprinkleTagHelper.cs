@@ -21,6 +21,6 @@ public class CMSprinkleTagHelper : TagHelper
     {
         var content = await _dataService.Get(ContentKey);
         output.TagMode = TagMode.StartTagAndEndTag;
-        output.Content.SetHtmlContent(content);
+        output.Content.SetHtmlContent(content.Content);
     }
 }

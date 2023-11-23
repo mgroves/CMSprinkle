@@ -17,25 +17,26 @@ public class CouchbaseCMSprinkleDataSerivce : ICMSprinkleDataService
         _cmsCollectionProvider = cmsCollectionProvider;
     }
 
-    public async Task<string> Get(string contentKey)
+    public async Task<GetContentResult> Get(string contentKey)
     {
         var collection = await _cmsCollectionProvider.GetCollectionAsync();
 
         var contentDoc = await collection.TryGetAsync("content::" + contentKey);
         if (!contentDoc.Exists)
-            return $"ERROR: Content Not Found ({contentKey})";
+            return new GetContentResult { Key = contentKey, Content = null};
         var content = contentDoc.ContentAs<CMSprinkleContent>();
 
-        //var markdownContent = $"Hello from CMSprinkle! This is Markdown Content for _{contentKey}_.";
-        //var markdownContent = "[Click Me](javascript:alert('Executing JavaScript'))";
-        //var markdownContent = "[Click Me](https://yahoo.com)";
         var pipeline = new MarkdownPipelineBuilder()
             .UseAdvancedExtensions()
             .Build();
         var html = Markdown.ToHtml(content.Content, pipeline);
 
         var sanitizer = new HtmlSanitizer();
-        return sanitizer.Sanitize(html);
+        return new GetContentResult
+        {
+            Key = contentKey,
+            Content = sanitizer.Sanitize(html)
+        };
     }
 
     public async Task<string> GetAdmin(string contentKey)
@@ -56,7 +57,7 @@ public class CouchbaseCMSprinkleDataSerivce : ICMSprinkleDataService
         {
             var contentResult = await collection.GetAsync("content::" + i);
             var content = contentResult.ContentAs<CMSprinkleContent>();
-            allContent.Add(i, content.Content.Substring(0,50));
+            allContent.Add(i, content.Content);
         }
         homeView.AllContent = allContent;
         return homeView;
