@@ -12,6 +12,27 @@
 
 <form method="post">
     <p>Key: <input type="text" name="key" value="@Model.Key" maxlength="90" /></p>
-    <p>Content: <textarea rows="20" width="75%" name="content" maxlength="10000000">@Model.Content</textarea></p>
+    <p>Content: <textarea rows="20" width="75%" name="content" id="content" maxlength="10000000">@Model.Content</textarea></p>
     <input type="submit" value="Add" />
 </form>
+
+@section scripts {
+    <script src="https://cdn.jsdelivr.net/npm/stackedit-js@1.0.7/docs/lib/stackedit.min.js"></script>
+    <script>
+        const stackedit = new Stackedit();
+
+        // Open StackEdit when the textarea is focused
+        document.getElementById('content').addEventListener('focus', function () {
+            stackedit.openFile({
+                content: {
+                    text: document.getElementById('content').value
+                }
+            });
+        });
+
+        // Listen to StackEdit events and update the textarea
+        stackedit.on('fileChange', (file) => {
+            document.getElementById('content').value = file.content.text;
+        });
+    </script>
+}
