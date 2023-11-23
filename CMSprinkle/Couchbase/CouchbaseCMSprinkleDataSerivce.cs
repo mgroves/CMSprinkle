@@ -26,7 +26,7 @@ public class CouchbaseCMSprinkleDataSerivce : ICMSprinkleDataService
     {
         var collection = await _cmsCollectionProvider.GetCollectionAsync();
 
-        var contentDoc = await collection.TryGetAsync("content::" + contentKey);
+        var contentDoc = await collection.TryGetAsync(MakeCouchbaseKey(contentKey));
         if (!contentDoc.Exists)
             return new GetContentResult { Key = contentKey, Content = null};
         var content = contentDoc.ContentAs<CMSprinkleContent>();
@@ -47,7 +47,7 @@ public class CouchbaseCMSprinkleDataSerivce : ICMSprinkleDataService
     public async Task<string> GetAdmin(string contentKey)
     {
         var collection = await _cmsCollectionProvider.GetCollectionAsync();
-        var contentDoc = await collection.GetAsync("content::" + contentKey);
+        var contentDoc = await collection.GetAsync(MakeCouchbaseKey(contentKey));
         var content = contentDoc.ContentAs<CMSprinkleContent>();
         return content.Content;
     }
@@ -60,7 +60,7 @@ public class CouchbaseCMSprinkleDataSerivce : ICMSprinkleDataService
         var allContent = new Dictionary<string, string>();
         foreach (var i in index)
         {
-            var contentResult = await collection.GetAsync("content::" + i);
+            var contentResult = await collection.GetAsync(MakeCouchbaseKey(i));
             var content = contentResult.ContentAs<CMSprinkleContent>();
             allContent.Add(i, content.Content);
         }
@@ -91,7 +91,7 @@ public class CouchbaseCMSprinkleDataSerivce : ICMSprinkleDataService
             }
             // update index, add new content doc
             await ctx.ReplaceAsync(indexResult, index);
-            await ctx.InsertAsync(collection, "content::" + model.Key, new CMSprinkleContent() { Content = model.Content });
+            await ctx.InsertAsync(collection, MakeCouchbaseKey(model.Key), new CMSprinkleContent() { Content = model.Content });
         });
     }
 
@@ -99,6 +99,34 @@ public class CouchbaseCMSprinkleDataSerivce : ICMSprinkleDataService
     {
         var collection = await _cmsCollectionProvider.GetCollectionAsync();
 
-        await collection.ReplaceAsync("content::" + contentKey, new CMSprinkleContent() { Content = model.Content });
+        await collection.ReplaceAsync(MakeCouchbaseKey(contentKey), new CMSprinkleContent() { Content = model.Content });
+    }
+
+    public async Task Delete(string contentKey)
+    {
+        var collection = await _cmsCollectionProvider.GetCollectionAsync();
+        var cluster = collection.Scope.Bucket.Cluster;
+
+        var transaction = Transactions.Create(cluster,
+            TransactionConfigBuilder.Create().DurabilityLevel(_durabilityLevelWrapper.DurabilityLevel));
+        await transaction.RunAsync(async ctx =>
+        {
+            // get index
+            var indexResult = await ctx.GetAsync(collection, "ContentIndex");
+            var index = indexResult.ContentAs<List<string>>();
+            index.Remove(contentKey);
+
+            // get the doc
+            var contentToDelete = await ctx.GetAsync(collection, MakeCouchbaseKey(contentKey));
+
+            // remove from index, remove content doc
+            await ctx.ReplaceAsync(indexResult, index);
+            await ctx.RemoveAsync(contentToDelete);
+        });
+    }
+
+    private string MakeCouchbaseKey(string contentKey)
+    {
+        return $"content::{contentKey}";
     }
 }

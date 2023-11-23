@@ -16,7 +16,7 @@ public class SprinkleController : Controller
         _dataService = dataService;
     }
 
-    [Route("/cmsprinkle/home")]
+    [HttpGet]
     [CMSprinkleRoute("/home")]
     public async Task<IActionResult> Home()
     {
@@ -25,7 +25,8 @@ public class SprinkleController : Controller
         return View(await _dataService.GetAllForHome());
     }
 
-    [Route("/cmsprinkle/add")]
+    [HttpGet]
+    [CMSprinkleRoute("/add")]
     public async Task<IActionResult> Add()
     {
         if (!(await _auth.IsAllowed())) return Unauthorized();
@@ -33,7 +34,7 @@ public class SprinkleController : Controller
         return View(new AddContentSubmitModel());
     }
 
-    [Route("/cmsprinkle/add")]
+    [CMSprinkleRoute("/add")]
     [HttpPost]
     public async Task<IActionResult> Add(AddContentSubmitModel model)
     {
@@ -54,7 +55,8 @@ public class SprinkleController : Controller
         return RedirectToAction("Home");
     }
 
-    [Route("/cmsprinkle/edit/{contentKey}")]
+    [HttpGet]
+    [CMSprinkleRoute("/edit/{contentKey}")]
     public async Task<IActionResult> Edit(string contentKey)
     {
         if (!(await _auth.IsAllowed())) return Unauthorized();
@@ -69,13 +71,24 @@ public class SprinkleController : Controller
     }
 
     [HttpPost]
-    [Route("/cmsprinkle/edit/{contentKey}")]
+    [CMSprinkleRoute("/edit/{contentKey}")]
     public async Task<IActionResult> Edit(EditContentSubmitModel model, string contentKey)
     {
         if (!(await _auth.IsAllowed())) return Unauthorized();
 
         await _dataService.Update(contentKey, model);
 
+        return RedirectToAction("Home");
+    }
+
+    [HttpGet]
+    [CMSprinkleRoute("/delete/{contentKey}")]
+    public async Task<IActionResult> Delete(string contentKey)
+    {
+        if (!(await _auth.IsAllowed())) return Unauthorized();
+    
+        await _dataService.Delete(contentKey);
+    
         return RedirectToAction("Home");
     }
 }

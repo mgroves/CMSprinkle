@@ -10,4 +10,5 @@ public interface ICMSprinkleDataService
     Task<CMSprinkleHome> GetAllForHome();
     Task AddNew(AddContentSubmitModel model);
     Task Update(string contentKey, EditContentSubmitModel model);
+    Task Delete(string contentKey);
 }
