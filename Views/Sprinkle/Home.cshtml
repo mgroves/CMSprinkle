@@ -1,0 +1,32 @@
+﻿@{ Layout = "_SprinkleLayout";}
+@model CMSprinkle.ViewModels.CMSprinkleHome
+
+<h1>CMSprinkle Home Page</h1>
+
+<p><a href="/cmsprinkle/add">Add New Content</a></p>
+
+<table border="1">
+    <thead>
+    <th>Key</th>
+    <th>Content</th>
+    <th>&nbsp;</th>
+    </thead>
+    
+    @if (!Model.AllContent.Any())
+    {
+        <tr colspan="3">No Content Yet.</tr>
+    }
+    else
+    {
+        <tbody>
+        @foreach (var item in Model.AllContent)
+        {
+            <tr>
+                <td>@item.Key</td>
+                <td>@item.Value</td>
+                <td><a href="/cmsprinkle/edit/@item.Key">[Edit]</a></td>
+            </tr>
+        }
+        </tbody>
+    }
+</table>

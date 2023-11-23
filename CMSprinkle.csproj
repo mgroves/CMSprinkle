@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+		<PreserveCompilationContext>true</PreserveCompilationContext>
+		<GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="Views\Shared\_SprinkleLayout.cshtml" />
+	  <None Remove="Views\Sprinkle\Add.cshtml" />
+	  <None Remove="Views\Sprinkle\Edit.cshtml" />
+	  <None Remove="Views\Sprinkle\Home.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Views\**\*.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Couchbase.Extensions.DependencyInjection" Version="3.4.13" />
+		<PackageReference Include="HtmlSanitizer" Version="8.0.746" />
+		<PackageReference Include="Markdig" Version="0.33.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.25" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Views\Shared\_SprinkleLayout.cshtml">
+	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+</Project>
