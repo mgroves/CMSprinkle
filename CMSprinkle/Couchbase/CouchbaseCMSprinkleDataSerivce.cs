@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CMSprinkle.Data;
 using CMSprinkle.ViewModels;
@@ -77,7 +78,9 @@ public class CouchbaseCMSprinkleDataSerivce : ICMSprinkleDataService
         {
             ContentKey = model.Key,
             Content = model.Content,
-            LastUser = _auth.GetUsername()
+            LastUser = _auth.GetUsername(),
+            CreatedAt = DateTimeOffset.Now,
+            UpdatedLast = DateTimeOffset.Now
         };
 
         var collection = await _cmsCollectionProvider.GetCollectionAsync();
@@ -109,14 +112,13 @@ public class CouchbaseCMSprinkleDataSerivce : ICMSprinkleDataService
     {
         var collection = await _cmsCollectionProvider.GetCollectionAsync();
 
-        var updatedContent = new CMSprinkleContent
+        await collection.MutateInAsync(MakeCouchbaseKey(contentKey), specs =>
         {
-            ContentKey = contentKey,
-            Content = model.Content,
-            LastUser = _auth.GetUsername()
-        };
-
-        await collection.ReplaceAsync(MakeCouchbaseKey(contentKey), updatedContent);
+            specs.Upsert("content", model.Content);
+            specs.Upsert("lastUser", _auth.GetUsername());
+            specs.Upsert("updatedLast", DateTimeOffset.Now);
+            // do not ever replace createdAt
+        });
     }
 
     public async Task Delete(string contentKey)

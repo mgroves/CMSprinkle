@@ -13,6 +13,8 @@
     <th>Key</th>
     <th>Content</th>
     <th>Last User</th>
+    <th>Created</th>
+    <th>Updated</th>
     <th>&nbsp;</th>
     </thead>
     
@@ -29,6 +31,8 @@
                 <td>@item.ContentKey</td>
                 <td>@item.Content.ToTruncateMarkdown(50)</td>
                 <td>@item.LastUser</td>
+                <td>@item.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                <td>@item.UpdatedLast.ToString("yyyy-MM-dd HH:mm:ss")</td>
                 <td>
                     @Html.ActionLink("[Edit]", "Edit", "Sprinkle", new { contentKey = item.ContentKey })
                     @Html.ActionLink("[Delete]", "Delete", "Sprinkle", new { contentKey = item.ContentKey }, new { onclick = "return confirm('Are you sure you want to delete?');" })

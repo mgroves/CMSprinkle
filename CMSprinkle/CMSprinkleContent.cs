@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace CMSprinkle;
 
@@ -8,4 +9,6 @@ public class CMSprinkleContent
     public required string ContentKey { get; set; }
     public required string Content { get; set; }
     public required string LastUser { get; set; }
+    public required DateTimeOffset CreatedAt { get; set; }
+    public required DateTimeOffset UpdatedLast { get; set; }
 }
