@@ -18,6 +18,11 @@ internal class DefaultLocalOnlyAuth : ICMSprinkleAuth
         return IsLocalRequest(_httpContextAccessor.HttpContext);
     }
 
+    public string GetUsername()
+    {
+        return _httpContextAccessor?.HttpContext?.User?.Identity?.Name ?? "Anonymous";
+    }
+
     // from: https://stackoverflow.com/questions/35240586/in-asp-net-core-how-do-you-check-if-request-is-local
     private static bool IsLocalRequest(HttpContext context)
     {

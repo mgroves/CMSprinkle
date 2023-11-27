@@ -15,11 +15,13 @@ public class CouchbaseCMSprinkleDataSerivce : ICMSprinkleDataService
 {
     private readonly ICmsCollectionProvider _cmsCollectionProvider;
     private readonly DurabilityLevelWrapper _durabilityLevelWrapper;
+    private readonly ICMSprinkleAuth _auth;
 
-    public CouchbaseCMSprinkleDataSerivce(ICmsCollectionProvider cmsCollectionProvider, DurabilityLevelWrapper durabilityLevelWrapper)
+    public CouchbaseCMSprinkleDataSerivce(ICmsCollectionProvider cmsCollectionProvider, DurabilityLevelWrapper durabilityLevelWrapper, ICMSprinkleAuth auth)
     {
         _cmsCollectionProvider = cmsCollectionProvider;
         _durabilityLevelWrapper = durabilityLevelWrapper;
+        _auth = auth;
     }
 
     public async Task<GetContentResult> Get(string contentKey)
@@ -28,7 +30,7 @@ public class CouchbaseCMSprinkleDataSerivce : ICMSprinkleDataService
 
         var contentDoc = await collection.TryGetAsync(MakeCouchbaseKey(contentKey));
         if (!contentDoc.Exists)
-            return new GetContentResult { Key = contentKey, Content = null};
+            return new GetContentResult { Key = contentKey, Content = null, LastUser = null};
         var content = contentDoc.ContentAs<CMSprinkleContent>();
 
         var pipeline = new MarkdownPipelineBuilder()
@@ -40,7 +42,8 @@ public class CouchbaseCMSprinkleDataSerivce : ICMSprinkleDataService
         return new GetContentResult
         {
             Key = contentKey,
-            Content = sanitizer.Sanitize(html)
+            Content = sanitizer.Sanitize(html),
+            LastUser = content.LastUser
         };
     }
 
@@ -57,19 +60,26 @@ public class CouchbaseCMSprinkleDataSerivce : ICMSprinkleDataService
         var homeView = new CMSprinkleHome();
         var collection = await _cmsCollectionProvider.GetCollectionAsync();
         var index = collection.Set<string>("ContentIndex");
-        var allContent = new Dictionary<string, string>();
+        homeView.AllContent = new List<CMSprinkleContent>();
         foreach (var i in index)
         {
             var contentResult = await collection.GetAsync(MakeCouchbaseKey(i));
             var content = contentResult.ContentAs<CMSprinkleContent>();
-            allContent.Add(i, content.Content);
+            content.ContentKey = i;
+            homeView.AllContent.Add(content);
         }
-        homeView.AllContent = allContent;
         return homeView;
     }
 
     public async Task AddNew(AddContentSubmitModel model)
     {
+        var contentToSave = new CMSprinkleContent
+        {
+            ContentKey = model.Key,
+            Content = model.Content,
+            LastUser = _auth.GetUsername()
+        };
+
         var collection = await _cmsCollectionProvider.GetCollectionAsync();
         var cluster = collection.Scope.Bucket.Cluster;
 
@@ -91,7 +101,7 @@ public class CouchbaseCMSprinkleDataSerivce : ICMSprinkleDataService
             }
             // update index, add new content doc
             await ctx.ReplaceAsync(indexResult, index);
-            await ctx.InsertAsync(collection, MakeCouchbaseKey(model.Key), new CMSprinkleContent() { Content = model.Content });
+            await ctx.InsertAsync(collection, MakeCouchbaseKey(model.Key), contentToSave);
         });
     }
 
@@ -99,7 +109,14 @@ public class CouchbaseCMSprinkleDataSerivce : ICMSprinkleDataService
     {
         var collection = await _cmsCollectionProvider.GetCollectionAsync();
 
-        await collection.ReplaceAsync(MakeCouchbaseKey(contentKey), new CMSprinkleContent() { Content = model.Content });
+        var updatedContent = new CMSprinkleContent
+        {
+            ContentKey = contentKey,
+            Content = model.Content,
+            LastUser = _auth.GetUsername()
+        };
+
+        await collection.ReplaceAsync(MakeCouchbaseKey(contentKey), updatedContent);
     }
 
     public async Task Delete(string contentKey)

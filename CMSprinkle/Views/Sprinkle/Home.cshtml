@@ -12,6 +12,7 @@
     <thead>
     <th>Key</th>
     <th>Content</th>
+    <th>Last User</th>
     <th>&nbsp;</th>
     </thead>
     
@@ -25,11 +26,12 @@
         @foreach (var item in Model.AllContent)
         {
             <tr>
-                <td>@item.Key</td>
-                <td>@item.Value.ToTruncateMarkdown(50)</td>
+                <td>@item.ContentKey</td>
+                <td>@item.Content.ToTruncateMarkdown(50)</td>
+                <td>@item.LastUser</td>
                 <td>
-                    @Html.ActionLink("[Edit]", "Edit", "Sprinkle", new { contentKey = item.Key })
-                    @Html.ActionLink("[Delete]", "Delete", "Sprinkle", new { contentKey = item.Key }, new { onclick = "return confirm('Are you sure you want to delete?');" })
+                    @Html.ActionLink("[Edit]", "Edit", "Sprinkle", new { contentKey = item.ContentKey })
+                    @Html.ActionLink("[Delete]", "Delete", "Sprinkle", new { contentKey = item.ContentKey }, new { onclick = "return confirm('Are you sure you want to delete?');" })
                 </td>
             </tr>
         }

@@ -14,4 +14,11 @@ public class ExampleAuthClass : ICMSprinkleAuth
         // "true" means the use has access to CMSprinkle management tools (add/edit/etc)
         return true;
     }
+
+    public string GetUsername()
+    {
+        // put code here to get username
+        // this will be saved in the content (last user to edit, for instance)
+        return "Username" + Path.GetRandomFileName();
+    }
 }

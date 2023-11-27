@@ -2,7 +2,7 @@
 
 namespace CMSprinkle;
 
-public class CMSprinkleRouteAttribute : RouteAttribute
+internal class CMSprinkleRouteAttribute : RouteAttribute
 {
     public static string RoutePrefix = "cmsprinkle";
 
