@@ -34,7 +34,7 @@ builder.Services.AddCMSprinkle(options =>
 });
 
 // this adds a Couchbase connection to CMSprinkle
-builder.Services.AddCMSprinkleCouchbase("Example","_default","_default");
+await builder.Services.AddCMSprinkleCouchbaseAsync("Example","_default","_default", createCollectionIfNecessary: true);
 // TODO: SQLServer provider
 
 var app = builder.Build();
