@@ -19,6 +19,6 @@ public class ExampleAuthClass : ICMSprinkleAuth
     {
         // put code here to get username
         // this will be saved in the content (last user to edit, for instance)
-        return "Username" + Path.GetRandomFileName();
+        return "user-" + Path.GetRandomFileName();
     }
 }
