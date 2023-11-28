@@ -38,7 +38,7 @@ builder.Services.AddCMSprinkle(options =>
 await builder.Services.AddCMSprinkleCouchbaseAsync("Example","_default","_default", createCollectionIfNecessary: true);
 
 // or here's the SQLServer provider
-// await builder.Services.AddCMSprinkleSqlServerAsync("Server=localhost;Database=Example;User Id=sa;Password=yourStrong(!)Password;TrustServerCertificate=True;", "SprinkleContent", "dbo", true);
+//await builder.Services.AddCMSprinkleSqlServerAsync("Server=localhost;Database=Example;User Id=sa;Password=yourStrong(!)Password;TrustServerCertificate=True;", "SprinkleContent", "dbo",  createTableIfNecessary: true);
 
 var app = builder.Build();
 
