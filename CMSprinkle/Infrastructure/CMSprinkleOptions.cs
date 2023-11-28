@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CMSprinkle;
+namespace CMSprinkle.Infrastructure;
 
 public class CMSprinkleOptions
 {

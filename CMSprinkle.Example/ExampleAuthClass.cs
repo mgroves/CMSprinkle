@@ -1,4 +1,6 @@
-﻿namespace CMSprinkle.Example;
+﻿using CMSprinkle.Auth;
+
+namespace CMSprinkle.Example;
 
 // do NOT use this example
 public class ExampleAuthClass : ICMSprinkleAuth

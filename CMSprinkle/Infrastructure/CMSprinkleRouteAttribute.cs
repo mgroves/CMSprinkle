@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace CMSprinkle;
+namespace CMSprinkle.Infrastructure;
 
 internal class CMSprinkleRouteAttribute : RouteAttribute
 {

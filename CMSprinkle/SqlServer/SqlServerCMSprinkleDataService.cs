@@ -2,7 +2,9 @@
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using CMSprinkle.Auth;
 using CMSprinkle.Data;
+using CMSprinkle.Infrastructure;
 using CMSprinkle.ViewModels;
 using Dapper;
 

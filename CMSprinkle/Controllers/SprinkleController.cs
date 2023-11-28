@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
+using CMSprinkle.Auth;
 using CMSprinkle.Data;
+using CMSprinkle.Infrastructure;
 using CMSprinkle.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMSprinkle.Controllers;
+
 public class SprinkleController : Controller
 {
     private readonly ICMSprinkleAuth _auth;

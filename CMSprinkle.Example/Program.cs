@@ -1,7 +1,7 @@
-using CMSprinkle;
+using CMSprinkle.Auth;
 using CMSprinkle.Couchbase;
 using CMSprinkle.Example;
-using CMSprinkle.SqlServer;
+using CMSprinkle.Infrastructure;
 using Couchbase.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);

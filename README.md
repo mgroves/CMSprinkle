@@ -92,8 +92,10 @@ CMSprinkle is released under the [MIT License](LICENSE).
 # Powered By
 
 * [Couchbase](https://www.couchbase.com/) ([.NET SDK](https://docs.couchbase.com/dotnet-sdk/current/hello-world/start-using-sdk.html)) - for NoSQL storage
-* [NUnit](https://nunit.org/) - for automated tests
 * [Dapper](https://github.com/DapperLib/Dapper) - for SQL Server storage
 * [MarkDig](https://github.com/xoofx/markdig) - for Markdown rendering
 * [HtmlSanitizer](https://github.com/mganss/HtmlSanitizer) - for helping prevent XSS
 * [StackEdit](https://github.com/benweet/stackedit) - for Markdown editing, with [jsdelivr](https://github.com/jsdelivr/jsdelivr) for CDN
+* [NUnit](https://nunit.org/) - for automated tests
+* [FakeItEasy](https://github.com/FakeItEasy/FakeItEasy) - for mocking/fakes in tests
+ 

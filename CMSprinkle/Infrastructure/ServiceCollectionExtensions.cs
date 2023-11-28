@@ -3,8 +3,9 @@ using CMSprinkle.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using Microsoft.Extensions.FileProviders;
+using CMSprinkle.Auth;
 
-namespace CMSprinkle.Couchbase;
+namespace CMSprinkle.Infrastructure;
 
 public static class ServiceCollectionExtensions
 {
@@ -19,7 +20,7 @@ public static class ServiceCollectionExtensions
 
         // get options, if any were specified
         var opts = new CMSprinkleOptions();
-        if(options != null)
+        if (options != null)
             options(opts);
 
         // route prefix

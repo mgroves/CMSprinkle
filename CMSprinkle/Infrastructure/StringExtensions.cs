@@ -1,6 +1,6 @@
 ﻿using Markdig;
 
-namespace CMSprinkle;
+namespace CMSprinkle.Infrastructure;
 
 // all chatgpt generated
 public static class StringExtensions

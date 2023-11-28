@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace CMSprinkle;
+namespace CMSprinkle.Auth;
 
 public interface ICMSprinkleAuth
 {

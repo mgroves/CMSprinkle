@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System;
 
-namespace CMSprinkle;
+namespace CMSprinkle.Infrastructure;
 
 public static class ExceptionExtensions
 {

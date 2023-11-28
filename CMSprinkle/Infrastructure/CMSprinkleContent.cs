@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace CMSprinkle;
+namespace CMSprinkle.Infrastructure;
 
 public class CMSprinkleContent
 {

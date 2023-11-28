@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CMSprinkle.Auth;
 using CMSprinkle.Data;
+using CMSprinkle.Infrastructure;
 using CMSprinkle.ViewModels;
 using Couchbase.Core.Exceptions.KeyValue;
 using Couchbase.KeyValue;

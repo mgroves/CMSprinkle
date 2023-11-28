@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace CMSprinkle;
+namespace CMSprinkle.Auth;
 
 internal class DefaultLocalOnlyAuth : ICMSprinkleAuth
 {
