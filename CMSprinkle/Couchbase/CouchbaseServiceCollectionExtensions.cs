@@ -43,7 +43,7 @@ public static class CouchbaseServiceCollectionExtensions
         }
 
         // add couchbase data service for CMSPrinkle
-        @this.AddTransient<ICMSprinkleDataService, CouchbaseCMSprinkleDataSerivce>();
+        @this.AddTransient<ICMSprinkleDataService, CouchbaseCMSprinkleDataService>();
 
         // wrapper so that durability level enum can be injected
         @this.AddSingleton<DurabilityLevelWrapper>(x => new DurabilityLevelWrapper(durabilityLevel));
