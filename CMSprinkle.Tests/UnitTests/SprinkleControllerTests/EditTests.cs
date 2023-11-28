@@ -37,7 +37,6 @@ public class EditTests : ControllerTestBase
 
         // assert
         Assert.That(result, Is.InstanceOf<RedirectToActionResult>());
-        var redirectResult = result as RedirectToActionResult;
         Assert.That(_controller.TempData["Error"], Is.EqualTo(expectedErrorMessage));
     }
 

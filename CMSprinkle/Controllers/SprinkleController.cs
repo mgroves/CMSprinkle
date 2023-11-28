@@ -107,9 +107,16 @@ public class SprinkleController : Controller
     public async Task<IActionResult> Delete(string contentKey)
     {
         if (!(await _auth.IsAllowed())) return Unauthorized();
-    
-        await _dataService.Delete(contentKey);
-    
+
+        try
+        {
+            await _dataService.Delete(contentKey);
+        }
+        catch
+        {
+            TempData["Error"] = $"There was an error deleting '{contentKey}'";
+        }
+
         return RedirectToAction("Home");
     }
 }
