@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.InteropServices.ComTypes;
-using CMSprinkle.Tests.UnitTests.TestHelpers;
+﻿using CMSprinkle.Tests.UnitTests.TestHelpers;
 using CMSprinkle.ViewModels;
 using FakeItEasy;
 using Microsoft.AspNetCore.Mvc;
@@ -61,13 +59,13 @@ public class AddTests : ControllerTestBase
         Assert.That(model.Content, Is.Null.Or.Empty);
     }
 
-    [TestCase("")]
-    [TestCase(null)]
-    [TestCase("toolong___toolong___toolong___toolong___toolong___toolong___toolong___toolong___toolong___toolong___toolong___")]
-    public async Task Submitting_invalid_content_key_shows_errors_to_add_form(string? invalidContentKey)
+    [TestCase("", "Content key is required")]
+    [TestCase(null, "Content key is required")]
+    [TestCase("toolong___toolong___toolong___toolong___toolong___toolong___toolong___toolong___toolong___toolong___toolong___", "Content Key must be 90 characters or less")]
+    public async Task Submitting_invalid_content_key_shows_errors_to_add_form(string? invalidContentKey, string errorMessage)
     {
         // arrange
-        AddContentSubmitModel submission = AddContentSubmitModelHelper
+        var submission = AddContentSubmitModelHelper
             .Create(key: invalidContentKey, forceKeyNull: invalidContentKey == null);
 
         // act
@@ -75,6 +73,22 @@ public class AddTests : ControllerTestBase
 
         // assert
         Assert.That(validationResults.Any(), Is.True);
+        Assert.That(validationResults.Any(v => v.ErrorMessage == errorMessage));
+    }
+
+    [Test]
+    public async Task Submitting_content_thats_too_long_shows_error_to_add_form()
+    {
+        // arrange
+        var submission = AddContentSubmitModelHelper
+            .Create(content: new string('x',10000001));
+
+        // act
+        var validationResults = ValidateModel(submission);
+
+        // assert
+        Assert.That(validationResults.Any(), Is.True);
+        Assert.That(validationResults.Any(v => v.ErrorMessage == "Content is limited to a length of 10,000,000"));
     }
 
     [Test]

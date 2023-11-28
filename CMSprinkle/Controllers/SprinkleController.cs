@@ -86,7 +86,18 @@ public class SprinkleController : Controller
     {
         if (!(await _auth.IsAllowed())) return Unauthorized();
 
-        await _dataService.Update(contentKey, model);
+        try
+        {
+            await _dataService.Update(contentKey, model);
+        }
+        catch
+        {
+            ModelState.AddModelError("",$"Error saving changes to '{contentKey}'");
+            var editModel = new EditViewModel();
+            editModel.Key = contentKey;
+            editModel.Content = model.Content;
+            return View(editModel);
+        }
 
         return RedirectToAction("Home");
     }

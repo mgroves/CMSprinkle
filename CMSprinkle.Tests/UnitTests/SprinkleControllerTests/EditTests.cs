@@ -77,4 +77,60 @@ public class EditTests : ControllerTestBase
         var viewResult = result as ViewResult;
         Assert.That(viewResult.ViewName, Is.EqualTo(null).Or.EqualTo("Edit"));
     }
+
+    [Test]
+    public async Task Submitted_content_must_not_be_too_long()
+    {
+        // arrange
+        var submission = EditContentSubmitModelHelper
+            .Create(content: new string('x', 10000001));
+
+        // act
+        var validationResults = ValidateModel(submission);
+
+        // assert
+        Assert.That(validationResults.Any(), Is.True);
+        Assert.That(validationResults.Any(v => v.ErrorMessage == "Content is limited to a length of 10,000,000"));
+    }
+
+    [Test]
+    public async Task If_data_service_goes_wrong_show_error_on_form()
+    {
+        // arrange
+        var contentKey = "key-" + Path.GetRandomFileName();
+        var submission = EditContentSubmitModelHelper.Create();
+        var expectedMessage = $"Error saving changes to '{contentKey}'";
+        A.CallTo(() => _mockAuth.IsAllowed()).Returns(true);
+        A.CallTo(() => _mockDataService.Update(A<string>._, A<EditContentSubmitModel>._))
+            .Throws(new Exception("something went wrong with data service"));
+
+        // act
+        var result = await _controller.Edit(submission, contentKey);
+
+        // assert
+        Assert.That(result,Is.InstanceOf<ViewResult>());
+        var viewResult = result as ViewResult;
+        Assert.That(viewResult.ViewName, Is.EqualTo(null).Or.EqualTo("Edit"));
+        Assert.That(_controller.ModelState.Count, Is.GreaterThanOrEqualTo(1));
+        Assert.That(_controller.ModelState.AllErrorMessages(), Contains.Item(expectedMessage));
+    }
+
+    [Test]
+    public async Task If_edit_saves_successfully_redirect_to_home()
+    {
+        // arrange
+        var contentKey = "key-" + Path.GetRandomFileName();
+        A.CallTo(() => _mockAuth.IsAllowed()).Returns(true);
+        var submission = EditContentSubmitModelHelper.Create();
+
+        // act
+        var result = await _controller.Edit(submission, contentKey);
+
+        // assert
+        Assert.That(result, Is.InstanceOf<RedirectToActionResult>());
+        var redirectResult = result as RedirectToActionResult;
+        Assert.That(redirectResult.ControllerName, Is.EqualTo("Sprinkle").Or.EqualTo(null));
+        Assert.That(redirectResult.ActionName, Is.EqualTo("Home"));
+    }
+
 }
