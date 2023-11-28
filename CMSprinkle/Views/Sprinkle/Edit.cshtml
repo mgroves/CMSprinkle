@@ -5,6 +5,11 @@
 
 @Html.ActionLink("⬅ Back", "Home", "Sprinkle")
 
+@if (!ViewData.ModelState.IsValid)
+{
+    @Html.ValidationSummary(false)
+}
+
 <form method="post">
     <div class="form-group">
         <label for="key">Key:</label>

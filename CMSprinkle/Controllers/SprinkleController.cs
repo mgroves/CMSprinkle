@@ -64,13 +64,20 @@ public class SprinkleController : Controller
     {
         if (!(await _auth.IsAllowed())) return Unauthorized();
 
-        var content = await _dataService.GetAdmin(contentKey);
+        try
+        {
+            var content = await _dataService.GetAdmin(contentKey);
 
-        var editModel = new EditViewModel();
-        editModel.Key = contentKey;
-        editModel.Content = content;
-
-        return View(editModel);
+            var editModel = new EditViewModel();
+            editModel.Key = contentKey;
+            editModel.Content = content;
+            return View(editModel);
+        }
+        catch
+        {
+            TempData.Add("Error",$"There was an error opening '{contentKey}' for editing.");
+            return RedirectToAction("Home");
+        }
     }
 
     [HttpPost]

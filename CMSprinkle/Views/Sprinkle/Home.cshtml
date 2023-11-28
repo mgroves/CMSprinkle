@@ -4,6 +4,11 @@
 
 <h1>CMSprinkle</h1>
 
+@if (TempData.ContainsKey("Error"))
+{
+    <p class="error-message">@TempData["Error"]</p>
+}
+
 <p>
     @Html.ActionLink("➕ Add New Content", "Add", "Sprinkle")
 </p>

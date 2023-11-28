@@ -4,6 +4,7 @@ using CMSprinkle.Data;
 using FakeItEasy;
 using NUnit.Framework;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace CMSprinkle.Tests.UnitTests.SprinkleControllerTests;
 
@@ -19,6 +20,7 @@ public abstract class ControllerTestBase
         _mockAuth = A.Fake<ICMSprinkleAuth>();
         _mockDataService = A.Fake<ICMSprinkleDataService>();
         _controller = new SprinkleController(_mockAuth, _mockDataService);
+        _controller.TempData = A.Fake<TempDataDictionary>();
     }
 
     // for verifying validation attributes
