@@ -7,8 +7,6 @@ using Couchbase.Core.Exceptions.KeyValue;
 using Couchbase.KeyValue;
 using Couchbase.Transactions;
 using Couchbase.Transactions.Config;
-using Ganss.Xss;
-using Markdig;
 
 namespace CMSprinkle.Couchbase;
 

@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using CMSprinkle.Data;
 using CMSprinkle.ViewModels;
 using Dapper;
-using Ganss.Xss;
-using Markdig;
 
 namespace CMSprinkle.SqlServer;
 
