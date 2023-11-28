@@ -10,7 +10,7 @@ namespace CMSprinkle.Couchbase;
 public static class CouchbaseServiceCollectionExtensions
 {
     /// <summary>
-    /// Add Couchbase as the database backend for CMSprinkle. The bucket/scope/collection must already exist.
+    /// Add Couchbase as the database backend for CMSprinkle. The bucket/scope must already exist.
     /// </summary>
     /// <param name="bucketName">Couchbase bucket name</param>
     /// <param name="scopeName">Couchbase scope name</param>
