@@ -27,8 +27,6 @@ public class HomeTests : ControllerTestBase
     {
         // arrange
         var expectedData = CMSprinkleHomeHelper.Create();
-
-        A.CallTo(() => _mockAuth.IsAllowed()).Returns(true);
         A.CallTo(() => _mockDataService.GetAllForHome()).Returns(expectedData);
 
         // act
@@ -49,8 +47,6 @@ public class HomeTests : ControllerTestBase
     {
         // arrange
         var expectedData = CMSprinkleHomeHelper.Create();
-
-        A.CallTo(() => _mockAuth.IsAllowed()).Returns(true);
         A.CallTo(() => _mockDataService.GetAllForHome()).Returns(expectedData);
 
         // act

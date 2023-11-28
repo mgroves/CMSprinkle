@@ -23,12 +23,24 @@ public class EditTests : ControllerTestBase
     }
 
     [Test]
+    public async Task Unauthorized_users_posting_get_a_401()
+    {
+        // arrange
+        A.CallTo(() => _mockAuth.IsAllowed()).Returns(false);
+
+        // act
+        var result = await _controller.Edit(EditContentSubmitModelHelper.Create(), "key-whatever");
+
+        // assert
+        Assert.That(result, Is.InstanceOf<UnauthorizedResult>());
+    }
+
+    [Test]
     public async Task If_error_getting_data_redirect_to_home_and_show_a_message_to_user()
     {
         // arrange
         var troubleKey = "key-bogus";
         var expectedErrorMessage = $"There was an error opening '{troubleKey}' for editing.";
-        A.CallTo(() => _mockAuth.IsAllowed()).Returns(true);
         A.CallTo(() => _mockDataService.GetAdmin(troubleKey))
             .Throws(new Exception("some exception"));
 
@@ -45,7 +57,6 @@ public class EditTests : ControllerTestBase
     {
         // arrange
         var content = EditViewModelHelper.Create();
-        A.CallTo(() => _mockAuth.IsAllowed()).Returns(true);
         A.CallTo(() => _mockDataService.GetAdmin(content.Key)).Returns(content.Content);
 
         // act
@@ -65,7 +76,6 @@ public class EditTests : ControllerTestBase
     {
         // arrange
         var content = EditViewModelHelper.Create();
-        A.CallTo(() => _mockAuth.IsAllowed()).Returns(true);
         A.CallTo(() => _mockDataService.GetAdmin(content.Key)).Returns(content.Content);
 
         // act
@@ -99,7 +109,6 @@ public class EditTests : ControllerTestBase
         var contentKey = "key-" + Path.GetRandomFileName();
         var submission = EditContentSubmitModelHelper.Create();
         var expectedMessage = $"Error saving changes to '{contentKey}'";
-        A.CallTo(() => _mockAuth.IsAllowed()).Returns(true);
         A.CallTo(() => _mockDataService.Update(A<string>._, A<EditContentSubmitModel>._))
             .Throws(new Exception("something went wrong with data service"));
 
@@ -119,7 +128,6 @@ public class EditTests : ControllerTestBase
     {
         // arrange
         var contentKey = "key-" + Path.GetRandomFileName();
-        A.CallTo(() => _mockAuth.IsAllowed()).Returns(true);
         var submission = EditContentSubmitModelHelper.Create();
 
         // act

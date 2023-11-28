@@ -25,13 +25,6 @@ public class AddTests : ControllerTestBase
     [Test]
     public async Task Authorized_user_get_add_form()
     {
-        // arrange
-        A.CallTo(() => _mockAuth.IsAllowed()).Returns(true);
-        var expectedData = CMSprinkleHomeHelper.Create();
-
-        A.CallTo(() => _mockAuth.IsAllowed()).Returns(true);
-        A.CallTo(() => _mockDataService.GetAllForHome()).Returns(expectedData);
-
         // act
         var result = await _controller.Add();
 
@@ -44,9 +37,6 @@ public class AddTests : ControllerTestBase
     [Test]
     public async Task Coming_to_add_page_first_time_has_empty_form()
     {
-        // arrange
-        A.CallTo(() => _mockAuth.IsAllowed()).Returns(true);
-
         // act
         var result = await _controller.Add();
 
@@ -108,7 +98,6 @@ public class AddTests : ControllerTestBase
     public async Task Invalid_submission_sent_back_to_form()
     {
         // arrange
-        A.CallTo(() => _mockAuth.IsAllowed()).Returns(true);
         _controller.ModelState.AddModelError("error","error");
 
         // act
@@ -125,7 +114,6 @@ public class AddTests : ControllerTestBase
     {
         // arrange
         var model = AddContentSubmitModelHelper.Create();
-        A.CallTo(() => _mockAuth.IsAllowed()).Returns(true);
 
         // act
         await _controller.Add(model);
@@ -140,7 +128,6 @@ public class AddTests : ControllerTestBase
         // arrange
         var exceptionMessage = "something went wrong in data service";
         var model = AddContentSubmitModelHelper.Create();
-        A.CallTo(() => _mockAuth.IsAllowed()).Returns(true);
         A.CallTo(() => _mockDataService.AddNew(A<AddContentSubmitModel>._))
             .Throws(new Exception(exceptionMessage));
 
@@ -157,7 +144,6 @@ public class AddTests : ControllerTestBase
     {
         // arrange
         var model = AddContentSubmitModelHelper.Create();
-        A.CallTo(() => _mockAuth.IsAllowed()).Returns(true);
 
         // act
         var result = await _controller.Add(model);

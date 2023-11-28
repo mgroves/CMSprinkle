@@ -26,7 +26,6 @@ public class DeleteTests : ControllerTestBase
         // arrange
         var contentKey = "key-" + Path.GetRandomFileName();
         var expectedErrorMessage = $"There was an error deleting '{contentKey}'";
-        A.CallTo(() => _mockAuth.IsAllowed()).Returns(true);
         A.CallTo(() => _mockDataService.Delete(contentKey))
             .Throws(new Exception("data service problem"));
 
@@ -46,7 +45,6 @@ public class DeleteTests : ControllerTestBase
     {
         // arrange
         var contentKey = "key-" + Path.GetRandomFileName();
-        A.CallTo(() => _mockAuth.IsAllowed()).Returns(true);
 
         // act
         var result = await _controller.Delete(contentKey);

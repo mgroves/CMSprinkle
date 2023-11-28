@@ -21,6 +21,9 @@ public abstract class ControllerTestBase
         _mockDataService = A.Fake<ICMSprinkleDataService>();
         _controller = new SprinkleController(_mockAuth, _mockDataService);
         _controller.TempData = A.Fake<TempDataDictionary>();
+
+        // admin is okay by default
+        A.CallTo(() => _mockAuth.IsAllowed()).Returns(true);
     }
 
     // for verifying validation attributes
