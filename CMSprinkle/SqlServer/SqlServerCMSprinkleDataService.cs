@@ -38,19 +38,12 @@ public class SqlServerCMSprinkleDataService : ICMSprinkleDataService
             SELECT Content FROM [{_schemaName}].[{_tableName}]");
 
         if (result == null)
-            return new GetContentResult { Key = contentKey, Content = null, LastUser = null };
+            return new GetContentResult { Key = contentKey, Content = null };
 
-        var pipeline = new MarkdownPipelineBuilder()
-            .UseAdvancedExtensions()
-            .Build();
-        var html = Markdown.ToHtml(result.Content, pipeline);
-
-        var sanitizer = new HtmlSanitizer();
         return new GetContentResult
         {
             Key = contentKey,
-            Content = sanitizer.Sanitize(html),
-            LastUser = result.LastUser
+            Content = result.Content
         };
     }
 

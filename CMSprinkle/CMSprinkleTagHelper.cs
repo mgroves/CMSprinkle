@@ -1,5 +1,8 @@
 ﻿using System.Threading.Tasks;
 using CMSprinkle.Data;
+using Ganss.Xss;
+using Markdig;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace CMSprinkle;
@@ -21,6 +24,18 @@ public class CMSprinkleTagHelper : TagHelper
     {
         var content = await _dataService.Get(ContentKey);
         output.TagMode = TagMode.StartTagAndEndTag;
-        output.Content.SetHtmlContent(content.Content);
+        output.Content.SetHtmlContent(ProcessContent(content));
+    }
+
+    private string ProcessContent(GetContentResult content)
+    {
+        var pipeline = new MarkdownPipelineBuilder()
+            .UseAdvancedExtensions()
+            .Build();
+        var html = Markdown.ToHtml(content.Content, pipeline);
+
+        var sanitizer = new HtmlSanitizer();
+
+        return sanitizer.Sanitize(html);
     }
 }

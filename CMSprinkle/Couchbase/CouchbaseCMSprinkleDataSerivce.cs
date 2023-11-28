@@ -31,20 +31,14 @@ public class CouchbaseCMSprinkleDataSerivce : ICMSprinkleDataService
 
         var contentDoc = await collection.TryGetAsync(MakeCouchbaseKey(contentKey));
         if (!contentDoc.Exists)
-            return new GetContentResult { Key = contentKey, Content = null, LastUser = null};
+            return new GetContentResult { Key = contentKey, Content = null};
+
         var content = contentDoc.ContentAs<CMSprinkleContent>();
 
-        var pipeline = new MarkdownPipelineBuilder()
-            .UseAdvancedExtensions()
-            .Build();
-        var html = Markdown.ToHtml(content.Content, pipeline);
-
-        var sanitizer = new HtmlSanitizer();
         return new GetContentResult
         {
             Key = contentKey,
-            Content = sanitizer.Sanitize(html),
-            LastUser = content.LastUser
+            Content = content.Content
         };
     }
 

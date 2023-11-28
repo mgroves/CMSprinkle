@@ -13,6 +13,4 @@ public class GetContentResult
         get => string.IsNullOrEmpty(_content) ? ContentNotFoundMessage(Key) : _content;
         set => _content = value;
     }
-
-    public required string LastUser { get; set; }
 }
