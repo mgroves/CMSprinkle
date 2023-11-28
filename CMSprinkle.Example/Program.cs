@@ -1,6 +1,7 @@
 using CMSprinkle;
 using CMSprinkle.Couchbase;
 using CMSprinkle.Example;
+using CMSprinkle.SqlServer;
 using Couchbase.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,7 +36,9 @@ builder.Services.AddCMSprinkle(options =>
 
 // this adds a Couchbase connection to CMSprinkle
 await builder.Services.AddCMSprinkleCouchbaseAsync("Example","_default","_default", createCollectionIfNecessary: true);
-// TODO: SQLServer provider
+
+// or here's the SQLServer provider
+// await builder.Services.AddCMSprinkleSqlServerAsync("Server=localhost;Database=Example;User Id=sa;Password=yourStrong(!)Password;TrustServerCertificate=True;", "SprinkleContent", "dbo", true);
 
 var app = builder.Build();
 
