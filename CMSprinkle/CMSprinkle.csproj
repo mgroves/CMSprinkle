@@ -8,6 +8,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>CMSprinkle.Tests</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Views\Shared\_SprinkleLayout.cshtml" />
 	  <None Remove="Views\Sprinkle\Add.cshtml" />
 	  <None Remove="Views\Sprinkle\Edit.cshtml" />

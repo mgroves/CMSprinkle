@@ -2,9 +2,10 @@
 
 namespace CMSprinkle.Infrastructure;
 
-internal class CMSprinkleRouteAttribute : RouteAttribute
-{
-    public static string RoutePrefix = "cmsprinkle";
+internal class CMSprinkleRouteAttribute : RouteAttribute{
+
+    public const string DEFAULT_ROUTE_PREFIX = "cmsprinkle";
+    public static string RoutePrefix = DEFAULT_ROUTE_PREFIX;
 
     public CMSprinkleRouteAttribute(string routeTemplate)
         : base(GetPrefixedRoute(routeTemplate))

@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="UnitTests\Infrastructure\ServiceCollectionExtensionsTests\" />
     <Folder Include="UnitTests\SprinkleControllerTests\" />
   </ItemGroup>
 

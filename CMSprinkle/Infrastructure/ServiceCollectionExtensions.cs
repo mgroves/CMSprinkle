@@ -9,7 +9,7 @@ namespace CMSprinkle.Infrastructure;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddCMSprinkle(this IServiceCollection @this, Action<CMSprinkleOptions> options = null)
+    public static IServiceCollection AddCMSprinkle(this IServiceCollection @this, Action<CMSprinkleOptions> options = null)
     {
         // add the controllers/views from CMSprinkle
         @this.AddControllersWithViews()
@@ -43,5 +43,7 @@ public static class ServiceCollectionExtensions
         {
             @this.AddTransient<ICMSprinkleAuth, DefaultLocalOnlyAuth>();
         }
+
+        return @this;
     }
 }
