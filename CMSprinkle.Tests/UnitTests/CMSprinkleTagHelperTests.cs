@@ -79,7 +79,7 @@ public class CMSprinkleTagHelperTests
 
     // testing a few XSS strings just to make the point
     // I would love a way to throw a whole bunch of OWASP XSS strings at this, but
-    // at some point I have to rely on HtmlSanitizer
+    // I'm mostly just trusting HtmlSanitizer (and the fact that content is only entered by authorized users)
     [TestCase("[link](javascript:alert('xss'))", "<p><a>link</a></p>\n")]
     [TestCase("<img src='http://url.to.file.which/not.exist' onerror=alert(document.cookie);>", "<img src=\"http://url.to.file.which/not.exist\">\n")]
     [TestCase("<img src='http://url.to.file.which/not.exist' onerror=alert(/xss/);>", "<img src=\"http://url.to.file.which/not.exist\">\n")]
