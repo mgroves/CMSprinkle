@@ -10,7 +10,19 @@ public class GetContentResult
     private string _content;
     public required string Content
     {
-        get => string.IsNullOrEmpty(_content) ? ContentNotFoundMessage(Key) : _content;
+        get
+        {
+            if (!string.IsNullOrEmpty(_content))
+                return _content;
+            if (ContentNotFoundMessage != null)
+                return ContentNotFoundMessage(Key);
+            return DefaultNotFoundMessage(Key);
+        }
         set => _content = value;
+    }
+
+    public static string DefaultNotFoundMessage(string key)
+    {
+        return $"ERROR: Content Not Found ({key})";
     }
 }

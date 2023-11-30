@@ -33,7 +33,7 @@ public static class ServiceCollectionExtensions
         if (opts.ContentNotFoundMessage != null)
             GetContentResult.ContentNotFoundMessage = opts.ContentNotFoundMessage;
         else
-            GetContentResult.ContentNotFoundMessage = x => $"ERROR: Content Not Found ({x})";
+            GetContentResult.ContentNotFoundMessage = GetContentResult.DefaultNotFoundMessage;
 
         // if there is no ICMSprinkleAuth implementation registered,
         // then fall back to local only access
