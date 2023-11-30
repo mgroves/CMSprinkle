@@ -1,10 +1,9 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using CMSprinkle.Data;
 using Microsoft.Extensions.Hosting;
 
-namespace CMSprinkle.Couchbase;
+namespace CMSprinkle.Infrastructure;
 
 public class InitializeDatabaseHostedService : IHostedService
 {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Data;
 using CMSprinkle.Auth;
 using CMSprinkle.Data;
 using CMSprinkle.Infrastructure;

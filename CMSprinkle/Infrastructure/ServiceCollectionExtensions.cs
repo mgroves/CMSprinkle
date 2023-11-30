@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using Microsoft.Extensions.FileProviders;
 using CMSprinkle.Auth;
-using CMSprinkle.Couchbase;
 
 namespace CMSprinkle.Infrastructure;
 
