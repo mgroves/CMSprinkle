@@ -71,11 +71,11 @@ __Database Connection__
 
 Configure Couchbase for content storage:
 ```csharp
-await builder.Services.AddCMSprinkleCouchbaseAsync("<bucket name>", "<scope name>", "<collection name>", createCollectionIfNecessary: true);
+await builder.Services.AddCMSprinkleCouchbase("<bucket name>", "<scope name>", "<collection name>", createCollectionIfNecessary: true);
 ```
 Alternatively, use SQLServer as the provider:
 ```csharp
-await builder.Services.AddCMSprinkleSqlServerAsync("<sql server connection string>", "<table name>", "<schema name>",  createTableIfNecessary: true);
+await builder.Services.AddCMSprinkleSqlServer("<sql server connection string>", "<table name>", "<schema name>",  createTableIfNecessary: true);
 ```
 
 ## Configuration Details
@@ -84,7 +84,7 @@ await builder.Services.AddCMSprinkleSqlServerAsync("<sql server connection strin
 - **ContentNotFoundMessage**: Function to generate custom error messages when content is not found. Helps in debugging content issues.
 
 ## Contributing
-We welcome contributions! Please see the [Contributing Guide](CONTRIBUTING.md) for guidelines on how to contribute.
+Contributions of all shapes and sizes welcome! Please see the [Contributing Guide](CONTRIBUTING.md) for guidelines on how to contribute.
 
 ## License
 CMSprinkle is released under the [MIT License](LICENSE).
