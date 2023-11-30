@@ -14,28 +14,52 @@ public class SqlServerCMSprinkleDataService : ICMSprinkleDataService
 {
     private readonly IDbConnection _dbConnection;
     private readonly ICMSprinkleAuth _auth;
+    private readonly SqlServerSettings _settings;
     private readonly string _tableName;
     private readonly string _schemaName;
 
-    public SqlServerCMSprinkleDataService(IDbConnection dbConnection, ICMSprinkleAuth auth, TableNameWrapper tableNameWrapper)
+    public SqlServerCMSprinkleDataService(IDbConnection dbConnection, ICMSprinkleAuth auth, SqlServerSettings settings)
     {
         _dbConnection = dbConnection;
         _auth = auth;
-        _tableName = tableNameWrapper.TableName;
-        _schemaName = tableNameWrapper.SchemaName;
+        _settings = settings;
+        _tableName = _settings.TableName;
+        _schemaName = _settings.SchemaName;
+    }
+
+    public async Task InitializeDatabase()
+    {
+        if (!_settings.CreateTableIfNecessary)
+            return;
+
+        string sql = @$"
+        DECLARE @DynamicTableName NVARCHAR(255);
+        SET @DynamicTableName = QUOTENAME(@SchemaName) + '.' + QUOTENAME(@TableName);
+
+        IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = @SchemaName AND TABLE_NAME = @TableName)
+        BEGIN
+            EXEC('CREATE TABLE ' + @DynamicTableName + ' (
+                ContentKey NVARCHAR(90) PRIMARY KEY,
+                Content NVARCHAR(MAX),
+                LastUser NVARCHAR(255),
+                CreatedAt DATETIME,
+                UpdatedLast DATETIME NULL
+            )');
+        END";
+        await _dbConnection.ExecuteAsync(sql, new { TableName = _tableName, SchemaName = _schemaName });
     }
 
     public async Task<string> GetAdmin(string contentKey)
     {
         var result = await _dbConnection.QueryFirstAsync<CMSprinkleContent>($@"
-            SELECT Content FROM [{_schemaName}].[{_tableName}]");
+            SELECT Content FROM [{_schemaName}].[{_tableName}] WHERE ContentKey = @contentKey", new { contentKey });
         return result.Content;
     }
 
     public async Task<GetContentResult> Get(string contentKey)
     {
         var result = await _dbConnection.QueryFirstOrDefaultAsync<CMSprinkleContent>($@"
-            SELECT Content FROM [{_schemaName}].[{_tableName}]");
+            SELECT Content FROM [{_schemaName}].[{_tableName}] WHERE ContentKey = @contentKey", new { contentKey });
 
         if (result == null)
             return new GetContentResult { Key = contentKey, Content = null };
@@ -51,7 +75,7 @@ public class SqlServerCMSprinkleDataService : ICMSprinkleDataService
     {
         var result = await _dbConnection.QueryAsync<CMSprinkleContent>($@"
             SELECT * FROM [{_schemaName}].[{_tableName}]");
-        return new CMSprinkleHome { AllContent = result.ToList()};
+        return new CMSprinkleHome { AllContent = result.ToList() };
     }
 
     public async Task AddNew(AddContentSubmitModel model)

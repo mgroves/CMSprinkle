@@ -5,6 +5,7 @@ namespace CMSprinkle.Data;
 
 public interface ICMSprinkleDataService
 {
+    Task InitializeDatabase();
     Task<string> GetAdmin(string contentKey);
     Task<GetContentResult> Get(string contentKey);
     Task<CMSprinkleHome> GetAllForHome();

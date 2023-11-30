@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using Microsoft.Extensions.FileProviders;
 using CMSprinkle.Auth;
+using CMSprinkle.Couchbase;
 
 namespace CMSprinkle.Infrastructure;
 
@@ -43,6 +44,9 @@ public static class ServiceCollectionExtensions
         {
             @this.AddTransient<ICMSprinkleAuth, DefaultLocalOnlyAuth>();
         }
+
+        // one time start up needed for database initialization
+        @this.AddHostedService<InitializeDatabaseHostedService>();
 
         return @this;
     }

@@ -7,6 +7,7 @@ using CMSprinkle.Infrastructure;
 using CMSprinkle.ViewModels;
 using Couchbase.Core.Exceptions.KeyValue;
 using Couchbase.KeyValue;
+using Couchbase.Management.Collections;
 using Couchbase.Transactions;
 using Couchbase.Transactions.Config;
 
@@ -15,14 +16,38 @@ namespace CMSprinkle.Couchbase;
 public class CouchbaseCMSprinkleDataService : ICMSprinkleDataService
 {
     private readonly ICmsCollectionProvider _cmsCollectionProvider;
-    private readonly DurabilityLevelWrapper _durabilityLevelWrapper;
+    private readonly CouchbaseSettings _settings;
     private readonly ICMSprinkleAuth _auth;
+    private readonly ICmsBucketProvider _bucketProvider;
 
-    public CouchbaseCMSprinkleDataService(ICmsCollectionProvider cmsCollectionProvider, DurabilityLevelWrapper durabilityLevelWrapper, ICMSprinkleAuth auth)
+    public CouchbaseCMSprinkleDataService(ICmsCollectionProvider cmsCollectionProvider, CouchbaseSettings settings, ICMSprinkleAuth auth, ICmsBucketProvider bucketProvider)
     {
         _cmsCollectionProvider = cmsCollectionProvider;
-        _durabilityLevelWrapper = durabilityLevelWrapper;
+        _settings = settings;
         _auth = auth;
+        _bucketProvider = bucketProvider;
+    }
+
+    public async Task InitializeDatabase()
+    {
+        if (!_settings.CreateCollectionIfNecessary)
+            return;
+
+        if (_settings.CollectionName != "_default")
+        {
+            var bucket = await _bucketProvider.GetBucketAsync();
+            var collectionManager = bucket.Collections;
+            try
+            {
+                await collectionManager.CreateCollectionAsync(_settings.ScopeName, _settings.CollectionName,
+                    new CreateCollectionSettings());
+            }
+            catch (CollectionExistsException)
+            {
+                // I hate using a try/catch for this
+                // is there a better way?
+            }
+        }
     }
 
     public async Task<GetContentResult> Get(string contentKey)
@@ -81,7 +106,7 @@ public class CouchbaseCMSprinkleDataService : ICMSprinkleDataService
         var cluster = collection.Scope.Bucket.Cluster;
 
         var transaction = Transactions.Create(cluster, 
-            TransactionConfigBuilder.Create().DurabilityLevel(_durabilityLevelWrapper.DurabilityLevel));
+            TransactionConfigBuilder.Create().DurabilityLevel(_settings.DurabilityLevel));
         await transaction.RunAsync(async ctx =>
         {
             // add key to index, unless it's already there
@@ -121,7 +146,7 @@ public class CouchbaseCMSprinkleDataService : ICMSprinkleDataService
         var cluster = collection.Scope.Bucket.Cluster;
 
         var transaction = Transactions.Create(cluster,
-            TransactionConfigBuilder.Create().DurabilityLevel(_durabilityLevelWrapper.DurabilityLevel));
+            TransactionConfigBuilder.Create().DurabilityLevel(_settings.DurabilityLevel));
         await transaction.RunAsync(async ctx =>
         {
             // get index

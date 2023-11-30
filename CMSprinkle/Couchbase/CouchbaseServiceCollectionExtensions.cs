@@ -17,7 +17,7 @@ public static class CouchbaseServiceCollectionExtensions
     /// <param name="collectionName">Couchbase collection name</param>
     /// <param name="durabilityLevel">(optional) ACID durability level (None by default)</param>
     /// <param name="createCollectionIfNecessary">(optional) Creates the collection for collectionName if necessary (True by default)</param>
-    public static async Task AddCMSprinkleCouchbaseAsync(this IServiceCollection @this,
+    public static IServiceCollection AddCMSprinkleCouchbase(this IServiceCollection @this,
         string bucketName,
         string scopeName,
         string collectionName,
@@ -32,20 +32,18 @@ public static class CouchbaseServiceCollectionExtensions
                 .AddCollection<ICmsCollectionProvider>(collectionName);
         });
 
-        // create collection if necessary (_default is always there)
-        if (collectionName != "_default")
-        {
-            var tempServiceLocator = @this.BuildServiceProvider();
-            var bucketProvider = tempServiceLocator.GetService<ICmsBucketProvider>();
-            var bucket = await bucketProvider.GetBucketAsync();
-            var collectionManager = bucket.Collections;
-            await collectionManager.CreateCollectionAsync(scopeName, collectionName, new CreateCollectionSettings());
-        }
-
         // add couchbase data service for CMSPrinkle
         @this.AddTransient<ICMSprinkleDataService, CouchbaseCMSprinkleDataService>();
 
         // wrapper so that durability level enum can be injected
-        @this.AddSingleton<DurabilityLevelWrapper>(x => new DurabilityLevelWrapper(durabilityLevel));
+        @this.AddSingleton<CouchbaseSettings>(x => new CouchbaseSettings
+        {
+            CollectionName = collectionName,
+            ScopeName = scopeName,
+            DurabilityLevel = durabilityLevel,
+            CreateCollectionIfNecessary = createCollectionIfNecessary
+        });
+
+        return @this;
     }
 }
