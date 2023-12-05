@@ -14,9 +14,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSprinkle.Couchbase", "CMSprinkle.Couchbase\CMSprinkle.Couchbase.csproj", "{7C9E715A-94C3-4B88-992C-BF4AB47C1920}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMSprinkle.Couchbase", "CMSprinkle.Couchbase\CMSprinkle.Couchbase.csproj", "{7C9E715A-94C3-4B88-992C-BF4AB47C1920}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSprinkle.SqlServer", "CMSprinkle.SqlServer\CMSprinkle.SqlServer.csproj", "{57C0855A-1EB1-4DAC-8C2C-BEADD61C8528}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMSprinkle.SqlServer", "CMSprinkle.SqlServer\CMSprinkle.SqlServer.csproj", "{57C0855A-1EB1-4DAC-8C2C-BEADD61C8528}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSprinkle.Couchbase.Tests", "CMSprinkle.Couchbase.Tests\CMSprinkle.Couchbase.Tests.csproj", "{DF2C0867-D6FE-4201-AA82-999372217D51}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testcontainers.Couchbase", "..\testcontainers-dotnet\src\Testcontainers.Couchbase\Testcontainers.Couchbase.csproj", "{8634F40B-B2AF-4535-BAA4-57BCDFE91544}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testcontainers", "..\testcontainers-dotnet\src\Testcontainers\Testcontainers.csproj", "{67F3AD7D-18B5-44BF-B5AA-59253FF171E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +50,18 @@ Global
 		{57C0855A-1EB1-4DAC-8C2C-BEADD61C8528}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57C0855A-1EB1-4DAC-8C2C-BEADD61C8528}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57C0855A-1EB1-4DAC-8C2C-BEADD61C8528}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF2C0867-D6FE-4201-AA82-999372217D51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF2C0867-D6FE-4201-AA82-999372217D51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF2C0867-D6FE-4201-AA82-999372217D51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF2C0867-D6FE-4201-AA82-999372217D51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8634F40B-B2AF-4535-BAA4-57BCDFE91544}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8634F40B-B2AF-4535-BAA4-57BCDFE91544}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8634F40B-B2AF-4535-BAA4-57BCDFE91544}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8634F40B-B2AF-4535-BAA4-57BCDFE91544}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67F3AD7D-18B5-44BF-B5AA-59253FF171E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67F3AD7D-18B5-44BF-B5AA-59253FF171E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67F3AD7D-18B5-44BF-B5AA-59253FF171E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67F3AD7D-18B5-44BF-B5AA-59253FF171E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

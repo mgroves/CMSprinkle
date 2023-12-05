@@ -33,9 +33,9 @@ public class CouchbaseCMSprinkleDataService : ICMSprinkleDataService
         if (!_settings.CreateCollectionIfNecessary)
             return;
 
+        var bucket = await _bucketProvider.GetBucketAsync();
         if (_settings.CollectionName != "_default")
         {
-            var bucket = await _bucketProvider.GetBucketAsync();
             var collectionManager = bucket.Collections;
             try
             {
@@ -48,6 +48,16 @@ public class CouchbaseCMSprinkleDataService : ICMSprinkleDataService
                 // is there a better way?
             }
         }
+
+        // create index document if necessary
+        // i'm using this as a way to avoid SQL++
+        // trying to keep CMSprinkle lightweight, using pure k/v
+        var scope = await bucket.ScopeAsync(_settings.ScopeName);
+        var collection = await scope.CollectionAsync(_settings.CollectionName);
+        var indexDocExists = await collection.ExistsAsync("ContentIndex");
+        if (indexDocExists.Exists)
+            return;
+        await collection.InsertAsync("ContentIndex", new List<string>());
     }
 
     public async Task<GetContentResult> Get(string contentKey)
@@ -65,14 +75,6 @@ public class CouchbaseCMSprinkleDataService : ICMSprinkleDataService
             Key = contentKey,
             Content = content.Content
         };
-    }
-
-    public async Task<string> GetAdmin(string contentKey)
-    {
-        var collection = await _cmsCollectionProvider.GetCollectionAsync();
-        var contentDoc = await collection.GetAsync(MakeCouchbaseKey(contentKey));
-        var content = contentDoc.ContentAs<CMSprinkleContent>();
-        return content.Content;
     }
 
     public async Task<CMSprinkleHome> GetAllForHome()
@@ -97,7 +99,7 @@ public class CouchbaseCMSprinkleDataService : ICMSprinkleDataService
         {
             ContentKey = model.Key,
             Content = model.Content,
-            LastUser = _auth.GetUsername(),
+            LastUser = await _auth.GetUsername(),
             CreatedAt = DateTimeOffset.Now,
             UpdatedLast = DateTimeOffset.Now
         };
@@ -131,10 +133,11 @@ public class CouchbaseCMSprinkleDataService : ICMSprinkleDataService
     {
         var collection = await _cmsCollectionProvider.GetCollectionAsync();
 
+        var userName = await _auth.GetUsername();
         await collection.MutateInAsync(MakeCouchbaseKey(contentKey), specs =>
         {
             specs.Upsert("content", model.Content);
-            specs.Upsert("lastUser", _auth.GetUsername());
+            specs.Upsert("lastUser", userName);
             specs.Upsert("updatedLast", DateTimeOffset.Now);
             // do not ever replace createdAt
         });

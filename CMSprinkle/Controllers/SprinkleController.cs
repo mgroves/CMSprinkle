@@ -66,11 +66,11 @@ public class SprinkleController : Controller
 
         try
         {
-            var content = await _dataService.GetAdmin(contentKey);
+            var content = await _dataService.Get(contentKey);
 
             var editModel = new EditViewModel();
             editModel.Key = contentKey;
-            editModel.Content = content;
+            editModel.Content = content.Content;
             return View(editModel);
         }
         catch

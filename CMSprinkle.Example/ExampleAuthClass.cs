@@ -17,7 +17,7 @@ public class ExampleAuthClass : ICMSprinkleAuth
         return true;
     }
 
-    public string GetUsername()
+    public async Task<string> GetUsername()
     {
         // put code here to get username
         // this will be saved in the content (last user to edit, for instance)

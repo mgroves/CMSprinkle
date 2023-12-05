@@ -1,4 +1,5 @@
-﻿using CMSprinkle.Tests.UnitTests.TestHelpers;
+﻿using CMSprinkle.Data;
+using CMSprinkle.Tests.UnitTests.TestHelpers;
 using CMSprinkle.ViewModels;
 using FakeItEasy;
 using Microsoft.AspNetCore.Mvc;
@@ -41,7 +42,7 @@ public class EditTests : ControllerTestBase
         // arrange
         var troubleKey = "key-bogus";
         var expectedErrorMessage = $"There was an error opening '{troubleKey}' for editing.";
-        A.CallTo(() => _mockDataService.GetAdmin(troubleKey))
+        A.CallTo(() => _mockDataService.Get(troubleKey))
             .Throws(new Exception("some exception"));
 
         // act
@@ -57,7 +58,12 @@ public class EditTests : ControllerTestBase
     {
         // arrange
         var content = EditViewModelHelper.Create();
-        A.CallTo(() => _mockDataService.GetAdmin(content.Key)).Returns(content.Content);
+        var getContent = new GetContentResult
+        {
+            Key = content.Key,
+            Content = content.Content
+        };
+        A.CallTo(() => _mockDataService.Get(content.Key)).Returns(getContent);
 
         // act
         var result = await _controller.Edit(content.Key);
@@ -76,7 +82,12 @@ public class EditTests : ControllerTestBase
     {
         // arrange
         var content = EditViewModelHelper.Create();
-        A.CallTo(() => _mockDataService.GetAdmin(content.Key)).Returns(content.Content);
+        var getContent = new GetContentResult
+        {
+            Key = content.Key,
+            Content = content.Content
+        };
+        A.CallTo(() => _mockDataService.Get(content.Key)).Returns(getContent);
 
         // act
         var result = await _controller.Edit(content.Key);

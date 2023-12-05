@@ -5,5 +5,5 @@ namespace CMSprinkle.Auth;
 public interface ICMSprinkleAuth
 {
     Task<bool> IsAllowed();
-    string GetUsername();
+    Task<string> GetUsername();
 }

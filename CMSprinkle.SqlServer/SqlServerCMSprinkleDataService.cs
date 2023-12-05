@@ -46,13 +46,6 @@ public class SqlServerCMSprinkleDataService : ICMSprinkleDataService
         await _dbConnection.ExecuteAsync(sql, new { TableName = _tableName, SchemaName = _schemaName });
     }
 
-    public async Task<string> GetAdmin(string contentKey)
-    {
-        var result = await _dbConnection.QueryFirstAsync<CMSprinkleContent>($@"
-            SELECT Content FROM [{_schemaName}].[{_tableName}] WHERE ContentKey = @contentKey", new { contentKey });
-        return result.Content;
-    }
-
     public async Task<GetContentResult> Get(string contentKey)
     {
         var result = await _dbConnection.QueryFirstOrDefaultAsync<CMSprinkleContent>($@"
@@ -83,7 +76,7 @@ public class SqlServerCMSprinkleDataService : ICMSprinkleDataService
         {
             ContentKey = model.Key,
             Content = model.Content,
-            LastUser = _auth.GetUsername(),
+            LastUser = await _auth.GetUsername(),
             CreatedAt = DateTimeOffset.Now,
             UpdatedLast = DateTimeOffset.Now
         });
@@ -101,7 +94,7 @@ public class SqlServerCMSprinkleDataService : ICMSprinkleDataService
         {
             ContentKey = contentKey,
             Content = model.Content,
-            LastUser = _auth.GetUsername(),
+            LastUser = await _auth.GetUsername(),
             UpdatedLast = DateTimeOffset.Now
             // do not update CreatedAt
         });

@@ -18,7 +18,7 @@ internal class DefaultLocalOnlyAuth : ICMSprinkleAuth
         return IsLocalRequest(_httpContextAccessor.HttpContext);
     }
 
-    public string GetUsername()
+    public async Task<string> GetUsername()
     {
         return _httpContextAccessor?.HttpContext?.User?.Identity?.Name ?? "Anonymous";
     }
