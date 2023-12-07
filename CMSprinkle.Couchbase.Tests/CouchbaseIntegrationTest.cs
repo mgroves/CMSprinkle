@@ -1,16 +1,7 @@
-﻿using System.Diagnostics;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Text.RegularExpressions;
-using CMSprinkle.Infrastructure;
+﻿using CMSprinkle.Infrastructure;
 using Couchbase.Extensions.DependencyInjection;
-using DotNet.Testcontainers.Builders;
-using DotNet.Testcontainers.Configurations;
-using DotNet.Testcontainers.Containers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
 using Nito.AsyncEx;
 using Testcontainers.Couchbase;
 
