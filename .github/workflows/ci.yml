@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out code
+    - name: Check out code-
       uses: actions/checkout@v2
 
     - name: Setup .NET
@@ -39,7 +39,7 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Test
-      run: dotnet test CMSprinkle.Tests --no-build --verbosity normal
+      run:  dotnet test CMSprinkle.Tests\CMSprinkle.Tests.csproj --no-build --verbosity normal
 
   integrationtests_couchbase:
     needs: build
@@ -54,7 +54,7 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Test
-      run: dotnet test CMSprinkle.Couchbase.Tests --no-build --verbosity normal
+      run: dotnet test CMSprinkle.Couchbase.Tests\CMSprinkle.Couchbase.Tests.csproj --no-build --verbosity normal
 
   integrationtests_sqlserver:
     needs: build
@@ -69,4 +69,4 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Test
-      run: dotnet test CMSprinkle.SqlServer.Tests --no-build --verbosity normal
+      run: dotnet test CMSprinkle.SqlServer.Tests\CMSprinkle.SqlServer.Tests.csproj --no-build --verbosity normal
