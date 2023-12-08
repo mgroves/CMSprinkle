@@ -104,7 +104,12 @@ public class SqlServerCMSprinkleDataService : ICMSprinkleDataService
     {
         await _dbConnection.ExecuteAsync(@$"
             DELETE FROM [{_schemaName}].[{_tableName}]
-            WHERE ContentKey = @ContentKey", new
+            WHERE ContentKey = @ContentKey;
+
+            IF @@ROWCOUNT = 0
+            BEGIN
+                RAISERROR('No rows deleted', 16, 1);
+            END", new
         {
             ContentKey = contentKey
         });
