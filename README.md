@@ -1,6 +1,8 @@
 # CMSprinkle
 
-Coming soon: build/CI badges
+![CMSprinkle Tests](https://github.com/mgroves/CMSprinkle/actions/workflows/ci.yml/badge.svg)
+
+Coming soon: NuGet Package(s)
 
 ## Introduction
 CMSprinkle is a micro-CMS (Content Management System) designed for quick integration with ASP.NET Core applications. It allows developers to easily incorporate managed content into ASP.NET MVC Razor pages, perfect for applications requiring a _sprinkle_ of dynamic content management.
