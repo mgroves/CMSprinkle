@@ -2,7 +2,13 @@
 
 ![CMSprinkle Tests](https://github.com/mgroves/CMSprinkle/actions/workflows/ci.yml/badge.svg)
 
-Coming soon: NuGet Package(s)
+## NuGet
+
+| Package | Description | Version
+|----|-----|-----
+| [CMSprinkle](https://www.nuget.org/packages/CMSprinkle) | Core package, required | ![CMSprinkle](https://img.shields.io/nuget/v/CMSprinkle)
+| [CMSprinkle.Couchbase](https://www.nuget.org/packages/CMSprinkle.Couchbase) | Data provider for Couchbase | ![CMSprinkle.Couchbase](https://img.shields.io/nuget/v/CMSprinkle.Couchbase) | x | y
+| [CMSprinkle.SqlServer](https://www.nuget.org/packages/CMSprinkle.SqlServer) | Data provider for SqlServer | ![CMSprinkle.SqlServer](https://img.shields.io/nuget/v/CMSprinkle.SqlServer) | x | y
 
 ## Introduction
 CMSprinkle is a micro-CMS (Content Management System) designed for quick integration with ASP.NET Core applications. It allows developers to easily incorporate managed content into ASP.NET MVC Razor pages, perfect for applications requiring a _sprinkle_ of dynamic content management.
@@ -85,6 +91,18 @@ await builder.Services.AddCMSprinkleSqlServer("<sql server connection string>", 
 - **RoutePrefix**: Determines the URL segment where CMS managed content is accessible.
 - **ContentNotFoundMessage**: Function to generate custom error messages when content is not found. Helps in debugging content issues.
 
+## What about database [whatever]?
+
+More providers may be added in the future besides Couchbase and SQL Server.
+
+However, implementing your own provider isn't too difficult:
+
+0. Check out the [Contributing](#contributing) section below and the [code of conduct](CODE_OF_CONDUCT.md).
+1. Implement `ICMSprinkleDataService`
+2. (Probably) add a ServiceCollection extension (e.g. `AddCMSprinkle[Whatever]`).
+3. If you plan to implement and then contribute a provider, please make sure you open an issue ahead of time
+4. Please consider writing integration tests (using [testcontainers](https://github.com/testcontainers/testcontainers-dotnet), if possible).
+
 ## Contributing
 Contributions of all shapes and sizes welcome! Please see the [Contributing Guide](CONTRIBUTING.md) for guidelines on how to contribute.
 
@@ -99,5 +117,8 @@ CMSprinkle is released under the [MIT License](LICENSE).
 * [HtmlSanitizer](https://github.com/mganss/HtmlSanitizer) - for helping prevent XSS
 * [StackEdit](https://github.com/benweet/stackedit) - for Markdown editing, with [jsdelivr](https://github.com/jsdelivr/jsdelivr) for CDN
 * [NUnit](https://nunit.org/) - for automated tests
+* [Bogus](https://github.com/bchavez/Bogus) - for generating data for tests
 * [FakeItEasy](https://github.com/FakeItEasy/FakeItEasy) - for mocking/fakes in tests
+* [Nito.AsyncEx](https://github.com/StephenCleary/AsyncEx) - for AsyncLazy, used in testing
+* [Testcontainers for .NET](https://github.com/testcontainers/testcontainers-dotnet) - for integration testing
  
