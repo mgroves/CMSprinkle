@@ -3,6 +3,15 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <LangVersion>latest</LangVersion>
+		<Title>CMSprinkle.Couchbase</Title>
+		<Version>0.9.0</Version>
+		<Description>CMSprinkle is a micro-CMS (Content Management System) designed for quick integration with ASP.NET Core applications. It allows developers to easily incorporate managed content into ASP.NET MVC Razor pages, perfect for applications requiring a _sprinkle_ of dynamic content management. This module is to use Couchbase as the data store for CMSprinkle.</Description>
+    <Copyright>Matthew D. Groves 2023-present</Copyright>
+		<Authors>Matthew D. Groves</Authors>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryType>https://github.com/mgroves/CMSprinkle</RepositoryType>
+		<PackageTags>CMS;content</PackageTags>
+		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
