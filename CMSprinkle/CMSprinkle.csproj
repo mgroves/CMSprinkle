@@ -5,6 +5,14 @@
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 		<PreserveCompilationContext>true</PreserveCompilationContext>
 		<GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+		<Title>CMSprinkle</Title>
+		<Version>0.9.0</Version>
+		<Description>CMSprinkle is a micro-CMS (Content Management System) designed for quick integration with ASP.NET Core applications. It allows developers to easily incorporate managed content into ASP.NET MVC Razor pages, perfect for applications requiring a _sprinkle_ of dynamic content management.</Description>
+		<Copyright>Matthew D. Groves</Copyright>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryType>https://github.com/mgroves/CMSprinkle</RepositoryType>
+		<PackageTags>CMS;content</PackageTags>
+		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -22,6 +30,17 @@
 
 	<ItemGroup>
 		<EmbeddedResource Include="Views\**\*.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\LICENSE.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 
 	<ItemGroup>
