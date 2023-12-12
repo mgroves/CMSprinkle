@@ -14,6 +14,17 @@
 		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
   </PropertyGroup>
 
+	<ItemGroup>
+	  <None Include="..\LICENSE.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Couchbase.Extensions.DependencyInjection" Version="3.4.13" />
     <PackageReference Include="Couchbase.Transactions" Version="1.1.1" />
