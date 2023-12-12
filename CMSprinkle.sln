@@ -11,6 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMSprinkle.Tests", "CMSprin
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6E737739-7076-433C-8B04-16071B0CA24F}"
 	ProjectSection(SolutionItems) = preProject
+		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
+		CONTRIBUTING.md = CONTRIBUTING.md
+		LICENSE.md = LICENSE.md
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -20,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMSprinkle.SqlServer", "CMS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMSprinkle.Couchbase.Tests", "CMSprinkle.Couchbase.Tests\CMSprinkle.Couchbase.Tests.csproj", "{DF2C0867-D6FE-4201-AA82-999372217D51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSprinkle.SqlServer.Tests", "CMSprinkle.SqlServer.Tests\CMSprinkle.SqlServer.Tests.csproj", "{65E8F693-36A3-4936-99A5-A3F465A9593A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMSprinkle.SqlServer.Tests", "CMSprinkle.SqlServer.Tests\CMSprinkle.SqlServer.Tests.csproj", "{65E8F693-36A3-4936-99A5-A3F465A9593A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
