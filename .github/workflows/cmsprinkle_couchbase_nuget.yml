@@ -1,4 +1,4 @@
-name: Publish CMSprinkle NuGet Package
+name: Publish CMSprinkle.Couchbase NuGet Package
 
 on:
   workflow_dispatch:
