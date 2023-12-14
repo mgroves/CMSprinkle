@@ -19,7 +19,7 @@ builder.Services.AddCouchbase(options =>
 // this adds auth to CMSprinkle
 // if don't do this, it will be local only
 // ExampleAuthClass enables anonymous public access, so don't use it as-is!
-builder.Services.AddTransient<ICMSprinkleAuth, ExampleAuthClass>();
+// builder.Services.AddTransient<ICMSprinkleAuth, ExampleAuthClass>();
 
 // this adds CMSprinkle to your project
 builder.Services.AddCMSprinkle(options =>

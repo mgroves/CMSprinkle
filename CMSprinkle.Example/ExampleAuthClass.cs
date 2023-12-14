@@ -5,9 +5,12 @@ namespace CMSprinkle.Example;
 // do NOT use this example
 public class ExampleAuthClass : ICMSprinkleAuth
 {
-    public ExampleAuthClass()
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public ExampleAuthClass(IHttpContextAccessor httpContextAccessor)
     {
         // inject your auth dependencies in here
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task<bool> IsAllowed()

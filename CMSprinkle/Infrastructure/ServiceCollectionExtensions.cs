@@ -41,6 +41,7 @@ public static class ServiceCollectionExtensions
         var authService = serviceProvider.GetService<ICMSprinkleAuth>();
         if (authService == null)
         {
+            @this.AddHttpContextAccessor();
             @this.AddTransient<ICMSprinkleAuth, DefaultLocalOnlyAuth>();
         }
 

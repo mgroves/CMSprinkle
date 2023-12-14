@@ -79,11 +79,11 @@ __Database Connection__
 
 Configure Couchbase for content storage:
 ```csharp
-await builder.Services.AddCMSprinkleCouchbase("<bucket name>", "<scope name>", "<collection name>", createCollectionIfNecessary: true);
+builder.Services.AddCMSprinkleCouchbase("<bucket name>", "<scope name>", "<collection name>", createCollectionIfNecessary: true);
 ```
 Alternatively, use SQLServer as the provider:
 ```csharp
-await builder.Services.AddCMSprinkleSqlServer("<sql server connection string>", "<table name>", "<schema name>",  createTableIfNecessary: true);
+builder.Services.AddCMSprinkleSqlServer("<sql server connection string>", "<table name>", "<schema name>",  createTableIfNecessary: true);
 ```
 
 ## Configuration Details
