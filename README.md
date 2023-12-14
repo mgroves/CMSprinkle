@@ -7,8 +7,8 @@
 | Package | Description | Version
 |----|-----|-----
 | [CMSprinkle](https://www.nuget.org/packages/CMSprinkle) | Core package, required | ![CMSprinkle](https://img.shields.io/nuget/v/CMSprinkle)
-| [CMSprinkle.Couchbase](https://www.nuget.org/packages/CMSprinkle.Couchbase) | Data provider for Couchbase | ![CMSprinkle.Couchbase](https://img.shields.io/nuget/v/CMSprinkle.Couchbase) | x | y
-| [CMSprinkle.SqlServer](https://www.nuget.org/packages/CMSprinkle.SqlServer) | Data provider for SqlServer | ![CMSprinkle.SqlServer](https://img.shields.io/nuget/v/CMSprinkle.SqlServer) | x | y
+| [CMSprinkle.Couchbase](https://www.nuget.org/packages/CMSprinkle.Couchbase) | Data provider for Couchbase | ![CMSprinkle.Couchbase](https://img.shields.io/nuget/v/CMSprinkle.Couchbase) | 
+| [CMSprinkle.SqlServer](https://www.nuget.org/packages/CMSprinkle.SqlServer) | Data provider for SqlServer | ![CMSprinkle.SqlServer](https://img.shields.io/nuget/v/CMSprinkle.SqlServer) | 
 
 ## Introduction
 CMSprinkle is a micro-CMS (Content Management System) designed for quick integration with ASP.NET Core applications. It allows developers to easily incorporate managed content into ASP.NET MVC Razor pages, perfect for applications requiring a _sprinkle_ of dynamic content management.
