@@ -41,6 +41,10 @@ Instances of abusive, harassing, or otherwise unacceptable behavior may be repor
 
 Project maintainers who do not follow or enforce the Code of Conduct in good faith may face temporary or permanent repercussions as determined by other members of the project's leadership.
 
+## Changes to Code of Conduct
+
+Please do not submit a PR to change the code of conduct without first consulting with mgroves via private communication. PRs submitted without doing so will be rejected, regardless of content.
+
 ## Attribution
 
 This Code of Conduct is based on the [Contributor Covenant](https://www.contributor-covenant.org), version 1.4, available at <https://www.contributor-covenant.org/version/1/4/code-of-conduct.html>

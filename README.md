@@ -36,7 +36,7 @@ You can check out the CMSprinkle.Example project to see how CMSprinkle is used.
 Follow these steps to integrate CMSprinkle into your ASP.NET Core application:
 
 ### 1. Installation
-Add CMSprinkle to your project via NuGet (coming soon) or clone this repository.
+Add CMSprinkle to your project via NuGet or by cloning this repository.
 
 ### 2. Configuration in _ViewImports.cshtml
 Ensure CMSprinkle is available in your Razor pages by adding it to `_ViewImports.cshtml`:

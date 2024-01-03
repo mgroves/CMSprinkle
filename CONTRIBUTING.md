@@ -28,16 +28,16 @@ All types of contributions are encouraged and valued. See the [Table of Contents
 ## Code of Conduct
 
 This project and everyone participating in it is governed by the
-[CONTRIBUTING.md Code of Conduct](blob/master/CODE_OF_CONDUCT.md).
-By participating, you are expected to uphold this code. Please report unacceptable behavior to @mgroves.
+[CONTRIBUTING.md Code of Conduct](CODE_OF_CONDUCT.md).
+By participating, you are expected to uphold this code. Please report unacceptable behavior to [@mgroves](https://github.com/mgroves).
 
 ## I Have a Question
 
 > Before you ask a question, make sure you've read the [README](README.md) and any other available documentation.
 
-Also, search for existing [Issues](/issues) that might help you. In case you have found a suitable issue and still need clarification, write your question in that issue. If it's an old issue, or only partially relevant to your question, then start a new issue.
+Also, search for existing [Issues](https://github.com/mgroves/CMSprinkle/issues) that might help you. In case you have found a suitable issue and still need clarification, write your question in that issue. If it's an old issue, or only partially relevant to your question, then start a new issue.
 
-- Open an [Issue](/issues/new).
+- Open an [Issue](https://github.com/mgroves/CMSprinkle/issues/new).
 - Provide as much context as you can about what you're running into.
 - If you've found a bug, please include a summary, reproduction steps, your expected behavior, the actual behavior, relevant code (minimal examples appreciated), stack trace, and any other notes, screenshots, videos that could help.
 - Provide project and platform versions (e.g. database version, .NET version, operating system, etc), depending on what seems relevant.
@@ -53,7 +53,7 @@ If you are contributing a bug fix, just go on ahead and submit a PR and I'll rev
 
 If you want to contribute a new feature, formatting, code refactoring, or any other non-trivial changes, please first create an issue and discuss it.
 
-If you want to contribute documentation, bless you. Right now it's just a README file, but any documentation contributions are welcome.
+If you want to contribute documentation, bless you. Right now it's just a README file, but any documentation contributions are welcome. If it's a small change/recommendation, just go ahead and submit a PR. If it's a larger or more significant change, please open an issue first to discuss it.
 
 ## Styleguides
 
@@ -76,7 +76,7 @@ if(<condition 1> || <condition 2>) {
     // whatever
 }
 ```
-The later is terse, but the former is more readable and more self-documenting.
+The latter is terse, but the former is more readable and more self-documenting.
 
 In general, stick to [Framework design guidelines](https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/) as much as you can, but deviation is okay, especially if you make a thoughtful case.
 
