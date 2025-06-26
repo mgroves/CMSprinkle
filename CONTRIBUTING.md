@@ -1,4 +1,4 @@
-# Contributing to CONTRIBUTING.md
+# Contributing to CMSprinkle
 
 First, thank you for contributing! 
 
