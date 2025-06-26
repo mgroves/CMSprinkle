@@ -107,7 +107,7 @@ However, implementing your own provider isn't too difficult:
 Contributions of all shapes and sizes welcome! Please see the [Contributing Guide](CONTRIBUTING.md) for guidelines on how to contribute.
 
 ## License
-CMSprinkle is released under the [MIT License](LICENSE).
+CMSprinkle is released under the [MIT License](LICENSE.md).
 
 # Powered By
 
